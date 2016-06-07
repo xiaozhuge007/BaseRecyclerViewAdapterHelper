@@ -251,13 +251,13 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         notifyDataSetChanged();
     }
 
+
     /**
-     * additional data;
-     *
+     *如果一开始数据是null 调用这个
      * @param data
      */
     public void addData(List<T> data) {
-        this.mData.addAll(data);
+        this.mData = data;
         notifyDataSetChanged();
     }
 
@@ -538,6 +538,19 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
     }
 
+    /**
+     * 联网获取数据后更新的方式
+     * @see #notifyDataChangedAfterNet(List, boolean) 类似的
+     * ex:list.addAll(data)
+     *
+     * @param data
+     * @param isNextLoad
+     */
+    public void notifyDataChangedAfterNet(List<T> data, boolean isNextLoad) {
+        this.mData = data;
+        notifyDataChangedAfterLoadMore(isNextLoad);
+
+    }
 
     private void addLoadMore(RecyclerView.ViewHolder holder) {
         if (isLoadMore() && !mLoadingMoreEnable) {
